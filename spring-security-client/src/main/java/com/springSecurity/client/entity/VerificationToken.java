@@ -3,8 +3,6 @@ package com.springSecurity.client.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.Token;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,14 +26,12 @@ public class VerificationToken {
     private User user;
 
     public VerificationToken(User user, String token) {
-        super();
         this.token = token;
         this.user = user;
         this.expirationTime = calculateExpirationDate(EXPIRATION_TIME);
     }
 
     public VerificationToken(String token) {
-        super();
         this.token = token;
         this.expirationTime = calculateExpirationDate(EXPIRATION_TIME);
     }
