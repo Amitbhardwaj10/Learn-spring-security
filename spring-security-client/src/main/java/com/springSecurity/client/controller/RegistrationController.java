@@ -90,6 +90,6 @@ public class RegistrationController {
 
         // sendVerificationEmail()
         log.info("Click the link to Reset your Password: {}", url);
-            return url;
+        return url;
     }
 }
