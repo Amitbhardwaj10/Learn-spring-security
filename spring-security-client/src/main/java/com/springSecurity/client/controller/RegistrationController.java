@@ -43,7 +43,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/resendVerificationToken")
-    public String resendVerificationToken(@RequestParam("token") String oldToken, HttpServletRequest request ) {
+    public String resendVerificationToken(@RequestParam("token") String oldToken, HttpServletRequest request) {
         VerificationToken verificationToken = userService.generateNewVerificationToken(oldToken);
 
         User user = verificationToken.getUser();
@@ -83,6 +83,18 @@ public class RegistrationController {
         } else {
             return "Invalid Token";
         }
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestBody PasswordModel passwordModel) {
+        User user = userService.findByEmail(passwordModel.getEmail());
+
+        if (!userService.checkIfOldPasswordValid(user, passwordModel.getOldPassword())) {
+            return "Invalid Old Password";
+        }
+        // Save New Password
+        userService.changePassword(user, passwordModel.getNewPassword());
+        return "Password changed successfully";
     }
 
     private String passwordResetTokenMail(User user, String applicationUrl, String token) {
